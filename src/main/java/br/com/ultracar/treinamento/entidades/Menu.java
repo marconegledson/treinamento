@@ -4,11 +4,17 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -30,11 +36,20 @@ public class Menu implements Serializable{
 	@Column(name = "ds_url", length = 150, nullable = false)
 	private String url;
 	
-	@Column(name = "ds_icone", length = 45, nullable = false)
+	@Column(name = "ds_icone", length = 45)
 	private String icone;
 	
-	@Column(name = "ds_indice", length = 45, nullable = false)
+	@Column(name = "ds_indice", length = 45)
 	private String indice;
+	
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_permissao_acesso", foreignKey = @ForeignKey(name = "fk_menu_permissao_acesso"), nullable = false)
+	private PermissaoAcesso permissaoAcesso;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_menu_pai", foreignKey = @ForeignKey(name = "fk_menu_menu"))
+	private Menu menu;
 
 	public Long getId() {
 		return id;
@@ -74,6 +89,22 @@ public class Menu implements Serializable{
 
 	public void setIndice(String indice) {
 		this.indice = indice;
+	}
+
+	public PermissaoAcesso getPermissaoAcesso() {
+		return permissaoAcesso;
+	}
+
+	public void setPermissaoAcesso(PermissaoAcesso permissaoAcesso) {
+		this.permissaoAcesso = permissaoAcesso;
+	}
+
+	public Menu getMenu() {
+		return menu;
+	}
+
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
 
 	

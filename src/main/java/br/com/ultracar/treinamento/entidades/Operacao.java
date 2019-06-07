@@ -1,14 +1,18 @@
 package br.com.ultracar.treinamento.entidades;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -35,6 +39,9 @@ public class Operacao implements Serializable{
 	@Enumerated(EnumType.STRING)
 	@Column(name = "en_operacao", length = 10, nullable = false)
 	private Crud operacao;
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "operacoes")
+	private Set<PermissaoAcesso> permissoesDeAcesso = new HashSet<>();
 
 	public Long getId() {
 		return id;
