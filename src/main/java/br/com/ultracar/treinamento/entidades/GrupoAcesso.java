@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,14 +34,13 @@ public class GrupoAcesso implements Serializable{
 	@Column(name = "ds_descricao", length = 45, nullable = false)
 	private String descricao;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "grupoAcesso")
-	private Set<PermissaoAcesso> permissoesDeAcesso = new HashSet<>();
-	
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario", nullable = false)
+	@JoinColumn(name = "id_usuario", foreignKey = @ForeignKey(name = "fk_grupo_acesso_usuario"), nullable = false)
 	private Usuario usuario;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "grupoAcesso")
+	private Set<PermissaoAcesso> permissoesDeAcesso = new HashSet<>();
 
 	public Long getId() {
 		return id;

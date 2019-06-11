@@ -21,26 +21,26 @@ import javax.validation.constraints.Size;
 
 @Entity
 @SuppressWarnings("serial")
-@Table(name = "tb_cidade")
-public class Cidade implements Serializable{
+@Table(name = "tb_bairro")
+public class Bairro implements Serializable{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cidade_sequence")
-	@SequenceGenerator(name = "cidade_sequence", sequenceName = "cidade_id_sequence", allocationSize = 1)
-	@Column(name = "id_cidade", nullable = false)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bairro_sequence")
+	@SequenceGenerator(name = "bairro_sequence", sequenceName = "bairro_id_sequence", allocationSize = 1)
+	@Column(name = "id_bairro", nullable = false)
 	private Long id;
 	
-	@Size(min = 5, max = 38)
-	@Column(name = "ds_nome", length = 38, nullable = false)
+	@Size(min = 5, max = 100)
+	@Column(name = "ds_nome", length = 100, nullable = false)
 	private String nome;
 	
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_estado", foreignKey = @ForeignKey(name = "fk_cidade_estado"), nullable = false)
-	private Estado estado;
+	@JoinColumn(name = "id_cidade", foreignKey = @ForeignKey(name = "fk_bairro_cidade"), nullable = false)
+	private Cidade cidade;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cidade")
-	private Set<Bairro> bairros = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bairro")
+	private Set<Endereco> enderecos = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -58,20 +58,21 @@ public class Cidade implements Serializable{
 		this.nome = nome;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public Cidade getCidade() {
+		return cidade;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 
-	public Set<Bairro> getBairros() {
-		return bairros;
+	public Set<Endereco> getEnderecos() {
+		return enderecos;
 	}
 
-	public void setBairros(Set<Bairro> bairros) {
-		this.bairros = bairros;
+	public void setEnderecos(Set<Endereco> enderecos) {
+		this.enderecos = enderecos;
 	}
+
 	
 }

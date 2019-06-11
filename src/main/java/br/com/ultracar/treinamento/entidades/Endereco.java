@@ -1,14 +1,21 @@
 package br.com.ultracar.treinamento.entidades;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -43,6 +50,20 @@ public class Endereco  implements Serializable{
 	@Enumerated(EnumType.STRING)
 	@Column(name = "en_tipo_local", length = 10, nullable = false)
 	private TipoLocal tipoLocal;
+	
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_bairro", foreignKey = @ForeignKey(name = "fk_endereco_bairro"), nullable = false)
+	private Bairro bairro;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "endereco")
+	private Set<Ponto> pontos = new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "endereco")
+	private Set<Servico> servicos = new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "endereco")
+	private Set<Solicitante> solicitantes = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -83,5 +104,39 @@ public class Endereco  implements Serializable{
 	public void setTipoLocal(TipoLocal tipoLocal) {
 		this.tipoLocal = tipoLocal;
 	}
+
+	public Bairro getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(Bairro bairro) {
+		this.bairro = bairro;
+	}
+
+	public Set<Ponto> getPontos() {
+		return pontos;
+	}
+
+	public void setPontos(Set<Ponto> pontos) {
+		this.pontos = pontos;
+	}
+
+	public Set<Servico> getServicos() {
+		return servicos;
+	}
+
+	public void setServicos(Set<Servico> servicos) {
+		this.servicos = servicos;
+	}
+
+	public Set<Solicitante> getSolicitantes() {
+		return solicitantes;
+	}
+
+	public void setSolicitantes(Set<Solicitante> solicitantes) {
+		this.solicitantes = solicitantes;
+	}
+
+	
 	
 }
