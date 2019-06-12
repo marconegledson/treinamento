@@ -1,6 +1,5 @@
 package br.com.ultracar.treinamento.servicos;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
