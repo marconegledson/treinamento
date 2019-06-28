@@ -18,4 +18,9 @@ public interface OperacaoRepository extends JpaRepository<Operacao, Long>{
 	@Modifying
 	@Query("Delete From Operacao e Where e.descricao = :descricao ")
 	public Integer deleteByDescricao(String descricao);
+	
+	@Modifying
+	@Query("Update Operacao Set descricao = :descricao Where id = :id ")
+	public Integer updateDescricaoById(String descricao, Long i);
+	
 }

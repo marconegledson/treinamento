@@ -13,7 +13,7 @@ import br.com.ultracar.treinamento.entidades.Operacao;
 import br.com.ultracar.treinamento.entidades.Usuario;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+public interface UsuarioRepository extends JpaRepository<Usuario, Long>, CustomizedUsuarioRepository{
 	
 	@Nullable
 	@Query("Select u From Usuario u Where u.login = :login ")
